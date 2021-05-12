@@ -1,0 +1,13 @@
+* FLibrary Infra
+This repository is consisted of nix files governing the FLibrary infrastructure
+
+** Maintainers Guide
+*** Bootstrap
+Currently FLibrary has one server located physically in Silicon Valley, CA. This repository comes with a GitHub Action workflow which builds periodically the latest ISO image suitable for fast deployment on any server. Simply download the ISO from the release assets and run ~install-script~.
+*** Regular deployment
+The regular deployment and maintenance are done through ~nix run .#deploy~
+
+** Repository Structure
+- ~cfgs~ comprises NixOS configurations built on top of NixOS modules. This is used by image building and deployment through ~deploy-rs~
+- ~hardware-cfgs~ contains all the hardware configurations, mainly generated automatically and tailored manually. They are exposed as NixOS modules.
+- ~modules~ contains NixOS modules like base system, web server module, etc.
