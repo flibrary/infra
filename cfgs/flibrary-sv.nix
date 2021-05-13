@@ -17,7 +17,8 @@
         "$6$EKVU.ASDFD1ehd$HhL4g2ZSAKy7w5hOZPcrzxcd3R3axmx6Ku/xL6lvoGy1kJ1flTpxXEPNO/wxCYaxGQHt2Nt5VsY5VBmWU1dAV/";
       # A user for SSH login
       admin = {
-        openssh.authorizedKeys.keys = [ (import ../keys/ssh.nix).ash ];
+        openssh.authorizedKeys.keys =
+          [ (import ../keys/ssh.nix).ash (import ../keys/ssh.nix).ga ];
         hashedPassword =
           "$6$2XzDWOUx0/3eCx$EjIljN0bEKUW7OJMUM2RffWxvLPUC2FhMzy60Ogfy.i94vj4QNTuVcl3tV49g5z9KhNP/iTPcyncC5ndhDT3P0";
         isNormalUser = true;
