@@ -29,6 +29,11 @@ in {
     nix.package = pkgs.nixUnstable;
     nix.extraOptions = "experimental-features = nix-command flakes";
 
+    nix.binaryCaches =
+      [ (import ../keys/binarycaches.nix).flibrary-cachix.url ];
+    nix.binaryCachePublicKeys =
+      [ (import ../keys/binarycaches.nix).flibrary-cachix.key ];
+
     # Enable the OpenSSH daemon.
     services.openssh = { enable = true; };
 
