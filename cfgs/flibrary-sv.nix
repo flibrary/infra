@@ -4,6 +4,24 @@
     hostname = "flibrary-sv";
   };
 
+  webserver = {
+    enable = true;
+    domain = "45.32.131.167.nip.io";
+    reverseDstPort = 8000;
+  };
+
+  sails = {
+    enable = true;
+    config = {
+      default = {
+        databases.flibrary.url = "/var/lib/sails/db.sqlite";
+        # FIXME: this is not considered secure!
+        secret_key = "xpZXPM7lHtsDMVDdAAszsnmX+RxOcnosZksSvE4oPs4=";
+      };
+    };
+    package = pkgs.sails;
+  };
+
   # This is required to push "unsigned" nix store paths. We only allow wheel group to do so to limit the attack surface.
   nix.trustedUsers = [ "@wheel" ];
 

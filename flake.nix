@@ -5,9 +5,10 @@
     deploy-rs.url = "github:serokell/deploy-rs";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
+    sails.url = "github:flibrary/sails";
   };
 
-  outputs = { self, nixpkgs, deploy-rs, utils, ... }:
+  outputs = { self, nixpkgs, deploy-rs, utils, sails, ... }:
     utils.lib.eachSystem (utils.lib.defaultSystems) (system: rec {
       apps = {
         fmt = utils.lib.mkApp {
@@ -41,6 +42,7 @@
       # Reusable NixOS modules
       nixosModules = {
         base = (import ./modules/base.nix);
+        webserver = (import ./modules/webserver.nix);
         vultr-hardware = (import ./hardware-cfgs/vultr-hardware.nix);
       };
 
@@ -51,7 +53,10 @@
           system = "x86_64-linux";
           modules = [
             self.nixosModules.base
+            self.nixosModules.webserver
             self.nixosModules.vultr-hardware
+            sails.nixosModule
+            { nixpkgs.overlays = [ sails.overlay ]; }
             ./cfgs/flibrary-sv.nix
           ];
         };
