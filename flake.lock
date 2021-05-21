@@ -204,11 +204,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1621480732,
-        "narHash": "sha256-LgVnfp7GW+zYvLtMEcTFMntGhQWtB2KSYRwYSmmh7FA=",
+        "lastModified": 1621568164,
+        "narHash": "sha256-cvhAHTXR/8v2JCDAXu4hISDZEnFVHJxMbMiOCpQPjRE=",
         "owner": "flibrary",
         "repo": "sails",
-        "rev": "7e89994f5896cc9fc04b7fa0cc627ad60451c45a",
+        "rev": "15fdd5065418c0d094c4476a56cabaa75a970c8d",
         "type": "github"
       },
       "original": {

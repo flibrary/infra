@@ -25,4 +25,6 @@ jobs:
         known_hosts: "45.32.131.167 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH644x5o56908R+LCQPpTOiBm7Oqp1ELk4rT3Jj1jkTD"
         name: id_ed25519
         if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
-    - run: nix run .#deploy
+    - run: |
+        nix flake update
+        nix run .#deploy
