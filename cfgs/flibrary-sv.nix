@@ -6,7 +6,7 @@
 
   webserver = {
     enable = true;
-    domain = "45.32.131.167.nip.io";
+    domain = "flibrary.info";
     reverseDstPort = 8000;
   };
 

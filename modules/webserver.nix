@@ -26,9 +26,13 @@ in {
     services.caddy = {
       enable = true;
       config = ''
-        ${cfg.domain}
-        reverse_proxy 127.0.0.1:${toString cfg.reverseDstPort}
-      '';
+                ${cfg.domain} {
+                  reverse_proxy 127.0.0.1:${toString cfg.reverseDstPort}
+        	      }
+                www.${cfg.domain} {
+                  reverse_proxy 127.0.0.1:${toString cfg.reverseDstPort}
+                }
+              '';
     };
   };
 }
