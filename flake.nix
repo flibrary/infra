@@ -43,6 +43,7 @@
       nixosModules = {
         base = (import ./modules/base.nix);
         webserver = (import ./modules/webserver.nix);
+        v2ray = (import ./modules/v2ray.nix);
         vultr-hardware = (import ./hardware-cfgs/vultr-hardware.nix);
       };
 
@@ -54,6 +55,7 @@
           modules = [
             self.nixosModules.base
             self.nixosModules.webserver
+            self.nixosModules.v2ray
             self.nixosModules.vultr-hardware
             sails.nixosModule
             { nixpkgs.overlays = [ sails.overlay ]; }

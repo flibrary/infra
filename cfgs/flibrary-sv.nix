@@ -10,6 +10,13 @@
     reverseDstPort = 8000;
   };
 
+  v2ray-config = {
+    enable = true;
+    port = 30800;
+    path = "/rayon";
+    clients = (import ../keys/v2ray.nix).clients;
+  };
+
   sails = {
     enable = true;
     config = {
