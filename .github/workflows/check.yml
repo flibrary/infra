@@ -29,5 +29,5 @@ jobs:
         name: id_ed25519
         if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
     - run: |
-        nix flake update
+        nix flake update --recreate-lock-file
         nix run .#deploy
