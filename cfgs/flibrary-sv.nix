@@ -4,28 +4,44 @@
     hostname = "flibrary-sv";
   };
 
-  webserver = {
+  # Firewall options
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+  services.caddy = let
+    cfg = {
+      domain = "flibrary.info";
+      reverseDstPort = 8000;
+    };
+  in {
     enable = true;
-    domain = "flibrary.info";
-    reverseDstPort = 8000;
+    config = ''
+      ${cfg.domain} {
+          reverse_proxy 127.0.0.1:${toString cfg.reverseDstPort}
+          reverse_proxy /rayon localhost:30800 {
+            header_up -Origin
+          }
+      }
+      www.${cfg.domain} {
+          reverse_proxy 127.0.0.1:${toString cfg.reverseDstPort}
+      }
+    '';
   };
 
-  v2ray-config = {
+  services.v2ray = {
     enable = true;
-    port = 30800;
-    path = "/rayon";
-    clients = (import ../keys/v2ray.nix).clients;
+    configFile = config.age.secrets.v2ray.path;
   };
+
+  # v2ray-config = {
+  #   enable = true;
+  #   port = 30800;
+  #   path = "/rayon";
+  #   clients = (import config.age.secrets.v2ray).clients;
+  # };
 
   sails = {
     enable = true;
-    config = {
-      default = {
-        databases.flibrary.url = "/var/lib/sails/db.sqlite";
-        # FIXME: this is not considered secure!
-        secret_key = "xpZXPM7lHtsDMVDdAAszsnmX+RxOcnosZksSvE4oPs4=";
-      };
-    };
+    configFile = config.age.secrets.sails.path;
     package = pkgs.sails;
   };
 
