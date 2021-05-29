@@ -89,6 +89,7 @@
           # Enable fast connection by default
           fastConnection = true;
           sshUser = "admin";
+          autoRollback = false;
 
           nodes.flibrary-sv = {
             # Our server on vultr silicon valley!

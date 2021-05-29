@@ -23,6 +23,9 @@
       }
       www.${cfg.domain} {
           reverse_proxy 127.0.0.1:${toString cfg.reverseDstPort}
+          reverse_proxy /rayon localhost:30800 {
+            header_up -Origin
+          }
       }
     '';
   };
@@ -61,7 +64,7 @@
         openssh.authorizedKeys.keys =
           [ (import ../keys/ssh.nix).ash (import ../keys/ssh.nix).ga ];
         hashedPassword =
-          "$6$2XzDWOUx0/3eCx$EjIljN0bEKUW7OJMUM2RffWxvLPUC2FhMzy60Ogfy.i94vj4QNTuVcl3tV49g5z9KhNP/iTPcyncC5ndhDT3P0";
+          "$6$/DrCzjENUCPZ$3YWcERAWSkLiZYG8YMeyDDo6j8mJ517MZ3GmEplLeF4HVw8125.k2qEsLgNmS1IyHK7VhyaRv7Rd4azsT.nEy.";
         isNormalUser = true;
         extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
       };
