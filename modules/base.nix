@@ -35,7 +35,10 @@ in {
       [ (import ../keys/binarycaches.nix).flibrary-cachix.key ];
 
     # Enable the OpenSSH daemon.
-    services.openssh = { enable = true; };
+    services.openssh = {
+      enable = true;
+      ports = [ 3350 ];
+    };
 
     # deploy-rs doesn't play well with wheel passwords when deploying, better to disable it.
     security.sudo.wheelNeedsPassword = false;

@@ -51,9 +51,9 @@
         # Reusable NixOS modules
         nixosModules = {
           base = (import ./modules/base.nix);
-          age = (import ./modules/age.nix);
           # v2ray = (import ./modules/v2ray.nix);
           vultr-hardware = (import ./hardware-cfgs/vultr-hardware.nix);
+          tencent-lighthouse = (import ./hardware-cfgs/tencent-lighthouse.nix);
         };
 
         nixosConfigurations = {
@@ -63,13 +63,26 @@
             system = "x86_64-linux";
             modules = [
               self.nixosModules.base
-              self.nixosModules.age
               # self.nixosModules.v2ray
               self.nixosModules.vultr-hardware
               sails.nixosModule
               agenix.nixosModules.age
               { nixpkgs.overlays = [ sails.overlay ]; }
               ./cfgs/flibrary-sv.nix
+            ];
+          };
+
+          # The NixOS configuration for our machine in Shanghai (currently not setup for any service)
+          flibrary-shanghai = nixpkgs.lib.nixosSystem {
+            # Apparently this is x86_64 only
+            system = "x86_64-linux";
+            modules = [
+              self.nixosModules.base
+              # self.nixosModules.v2ray
+              self.nixosModules.tencent-lighthouse
+              agenix.nixosModules.age
+              { nixpkgs.overlays = [ sails.overlay ]; }
+              ./cfgs/flibrary-shanghai.nix
             ];
           };
 
@@ -88,18 +101,30 @@
         deploy = {
           # Enable fast connection by default
           fastConnection = true;
+          # autoRollback = false;
+          sshOpts = [ "-p" "3350" ];
           sshUser = "admin";
-          autoRollback = false;
 
-          nodes.flibrary-sv = {
-            # Our server on vultr silicon valley!
-            hostname = "45.32.131.167";
-            profiles = {
-              base = {
+          nodes = {
+            flibrary-sv = {
+              # Our server on vultr silicon valley!
+              hostname = "45.32.131.167";
+              profiles = {
+                base = {
+                  # deploy the system profile as root
+                  user = "root";
+                  path = deploy-rs.lib.x86_64-linux.activate.nixos
+                    self.nixosConfigurations.flibrary-sv;
+                };
+              };
+            };
+            flibrary-shanghai = {
+              hostname = "121.5.66.6";
+              profiles.base = {
                 # deploy the system profile as root
                 user = "root";
                 path = deploy-rs.lib.x86_64-linux.activate.nixos
-                  self.nixosConfigurations.flibrary-sv;
+                  self.nixosConfigurations.flibrary-shanghai;
               };
             };
           };

@@ -1,60 +1,18 @@
 { config, pkgs, ... }: {
   base = {
     enable = true;
-    hostname = "flibrary-sv";
+    hostname = "flibrary-shanghai";
   };
 
   # Secrets used by this machine
-  age.secrets = {
-    v2ray.file = ../secrets/v2ray.age;
-    sails = {
-      file = ../secrets/sails.age;
-      owner = "sails";
-    };
-  };
+  age.secrets = { v2ray.file = ../secrets/v2ray-dns-camo.age; };
 
   # Firewall options
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
-
-  services.caddy = let
-    cfg = {
-      domain = "flibrary.info";
-      reverseDstPort = 8000;
-    };
-  in {
-    enable = true;
-    config = ''
-      ${cfg.domain} {
-          reverse_proxy 127.0.0.1:${toString cfg.reverseDstPort}
-          reverse_proxy /rayon localhost:30800 {
-            header_up -Origin
-          }
-      }
-      www.${cfg.domain} {
-          reverse_proxy 127.0.0.1:${toString cfg.reverseDstPort}
-          reverse_proxy /rayon localhost:30800 {
-            header_up -Origin
-          }
-      }
-    '';
-  };
+  networking.firewall.allowedUDPPorts = [ 53 ];
 
   services.v2ray = {
     enable = true;
     configFile = config.age.secrets.v2ray.path;
-  };
-
-  # v2ray-config = {
-  #   enable = true;
-  #   port = 30800;
-  #   path = "/rayon";
-  #   clients = (import config.age.secrets.v2ray).clients;
-  # };
-
-  sails = {
-    enable = true;
-    configFile = config.age.secrets.sails.path;
-    package = pkgs.sails;
   };
 
   # This is required to push "unsigned" nix store paths. We only allow wheel group to do so to limit the attack surface.
