@@ -25,7 +25,9 @@ jobs:
       uses: shimataro/ssh-key-action@v2
       with:
         key: ${{ secrets.SSH_KEY }}
-        known_hosts: "45.32.131.167 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH644x5o56908R+LCQPpTOiBm7Oqp1ELk4rT3Jj1jkTD"
+        known_hosts: |
+          [45.32.131.167]:3350 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH644x5o56908R+LCQPpTOiBm7Oqp1ELk4rT3Jj1jkTD
+          [121.5.66.6]:3350 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMs92th7nFUqgaJWrUeC9J1fcTP5if7dr4EKq1MqICYf
         name: id_ed25519
         if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
     - run: |
