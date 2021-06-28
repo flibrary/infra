@@ -26,11 +26,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1623011836,
-        "narHash": "sha256-02M4P3eqUdV+ouZb8n1KDR1CXeZQm17cKpjKZKi0c10=",
+        "lastModified": 1624477559,
+        "narHash": "sha256-5lxwWMhCc+y+oSmDO7b9LNy20o9b/V5OKO9XS7gLxzE=",
         "owner": "serokell",
         "repo": "deploy-rs",
-        "rev": "70d71b3027b1793b780f1e2435bdbbe1b0cb9ac6",
+        "rev": "0964acc95051bd2b2d3ea0c9ab691e7be6eda7c0",
         "type": "github"
       },
       "original": {
@@ -141,11 +141,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1624024598,
-        "narHash": "sha256-X++38oH5MKEmPW4/2WdMaHQvwJzO8pJfbnzMD7DbG1E=",
+        "lastModified": 1624626397,
+        "narHash": "sha256-+h0ulo5//RqStx6g6MDqD9MzgmBfeZ1VYxwEaSmw/Zs=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "33d42ad7cf2769ce6364ed4e52afa8e9d1439d58",
+        "rev": "e1f8852faac7638e88d5e8a5b9ee2a7568685e3f",
         "type": "github"
       },
       "original": {
@@ -236,11 +236,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1624168123,
-        "narHash": "sha256-TFNoZu/Bt3udvExNgwiSyLYfO8UL8/8qQ+TcunvcPx4=",
+        "lastModified": 1624878963,
+        "narHash": "sha256-VTD36z38bJyS2HVHg5kT3b3FnOGDaZcUKMgtVY+b2yA=",
         "owner": "flibrary",
         "repo": "sails",
-        "rev": "5720aa139b878d39839b1472db118bcf7ef781d9",
+        "rev": "7c6316c499a17666bd4aab9a8f2ad2c80d157f53",
         "type": "github"
       },
       "original": {
