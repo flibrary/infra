@@ -10,7 +10,7 @@
   };
 
   outputs = { self, nixpkgs, deploy-rs, utils, sails, agenix, }:
-    nixpkgs.lib.recursiveUpdate (utils.lib.eachSystem (utils.lib.defaultSystems)
+    nixpkgs.lib.recursiveUpdate (utils.lib.eachSystem [ "x86_64-linux" ]
       (system: rec {
         apps = {
           fmt = utils.lib.mkApp {
