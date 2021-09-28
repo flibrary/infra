@@ -11,6 +11,10 @@
       file = ../secrets/sails.age;
       owner = "sails";
     };
+    mastodon = {
+      file = ../secrets/mastodon.age;
+      owner = "mastodon";
+    };
   };
 
   # Firewall options
@@ -20,6 +24,7 @@
     cfg = {
       domain = "flibrary.info";
       reverseDstPort = 8000;
+      mastodonPort = config.services.mastodon.webPort;
     };
   in {
     enable = true;
@@ -35,6 +40,9 @@
           reverse_proxy /rayon localhost:30800 {
             header_up -Origin
           }
+      }
+      forum.${cfg.domain} {
+          reverse_proxy 127.0.0.1:${toString cfg.mastodonPort}
       }
     '';
   };
@@ -55,6 +63,18 @@
     enable = true;
     configFile = config.age.secrets.sails.path;
     package = pkgs.sails;
+  };
+
+  services.mastodon = {
+    enable = true;
+    localDomain = "forum.flibrary.info";
+    smtp = {
+      createLocally = false;
+      host = "smtp-mail.outlook.com";
+      user = "flibrarynfls@outlook.com";
+      fromAddress = "flibrarynfls@outlook.com";
+      passwordFile = config.age.secrets.mastodon.path;
+    };
   };
 
   # This is required to push "unsigned" nix store paths. We only allow wheel group to do so to limit the attack surface.
