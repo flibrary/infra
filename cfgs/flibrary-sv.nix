@@ -158,8 +158,8 @@
       S3_ALIAS_HOST = "mastodon-assets.flibrary.info";
       S3_ENABLED="true";
       S3_BUCKET="mastodn";
-      AWS_ACCESS_KEY_ID="$(cat ${config.age.secrets.s3-access-key.path})";
-      AWS_SECRET_ACCESS_KEY="$(cat ${config.age.secrets.s3-secret-key.path})";
+      AWS_ACCESS_KEY_ID="$(cat ${config.age.secrets.s3-secret-key.path})";
+      AWS_SECRET_ACCESS_KEY="$(cat ${config.age.secrets.s3-access-key.path})";
       S3_PROTOCOL="https";
       S3_HOSTNAME="ewr1.vultrobjects.com";
     };
