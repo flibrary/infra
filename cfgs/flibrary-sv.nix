@@ -24,7 +24,8 @@
     cfg = {
       domain = "flibrary.info";
       reverseDstPort = 8000;
-      mastodonPort = config.services.mastodon.webPort;
+      mastodonWebPort = config.services.mastodon.webPort;
+      mastodonStreamingPort = config.services.mastodon.streamingPort;
     };
   in {
     enable = true;
@@ -42,7 +43,62 @@
           }
       }
       forum.${cfg.domain} {
-          reverse_proxy 127.0.0.1:${toString cfg.mastodonPort}
+          @local {
+            file
+            not path /
+          }
+          @local_media {
+            path_regexp /system/(.*)
+          }
+          @streaming {
+            path /api/v1/streaming/*
+          }
+          @cache_control {
+            path_regexp ^/(emoji|packs|/system/accounts/avatars|/system/media_attachments/files)
+          }
+
+          root * ${config.services.mastodon.package}/public/
+
+          encode zstd gzip
+
+          handle_errors {
+            rewrite 500.html
+            file_server
+          }
+
+          header {
+            Strict-Transport-Security "max-age=31536000"
+          }
+          header /sw.js Cache-Control "public, max-age=0"
+          header @cache_control Cache-Control "public, max-age=31536000, immutable"
+
+          handle @local {
+            file_server
+          }
+
+          ## If you've been migrated media from local to object storage, this navigate old URL to new one.
+          # redir @local_media https://yourobjectstorage.example.com/{http.regexp.1} permanent
+
+          reverse_proxy @streaming {
+            to http://localhost:${toString cfg.mastodonStreamingPort}
+
+            transport http {
+              keepalive 5s
+              keepalive_idle_conns 10
+            }
+          }
+
+          reverse_proxy  {
+            to http://localhost:${toString cfg.mastodonWebPort}
+
+            header_up X-Forwarded-Port 443
+            header_up X-Forwarded-Proto https
+
+            transport http {
+              keepalive 5s
+              keepalive_idle_conns 10
+            }
+          }
       }
     '';
   };
@@ -68,12 +124,18 @@
   services.mastodon = {
     enable = true;
     localDomain = "forum.flibrary.info";
+    enableUnixSocket = false;
     smtp = {
       createLocally = false;
       host = "smtp-mail.outlook.com";
       user = "flibrarynfls@outlook.com";
-      fromAddress = "flibrarynfls@outlook.com";
+      port = 587;
+      fromAddress = "FLibrary Mastodon <flibrarynfls@outlook.com>";
       passwordFile = config.age.secrets.mastodon.path;
+    };
+    extraConfig = {
+      SMTP_AUTH_METHOD="login";
+      SMTP_OPENSSL_VERIFY_MODE="none";
     };
   };
 
