@@ -54,7 +54,7 @@
       mastodon-assets.${cfg.domain} {
           reverse_proxy https://mastodon.ewr1.vultrobjects.com
       }
-      forum.${cfg.domain} {
+      circle.${cfg.domain} {
           @local {
             file
             not path /
@@ -133,15 +133,9 @@
     package = pkgs.sails;
   };
 
-  services.mastodon = {
-    package = pkgs.mastodon.overrideAttrs (oldAttrs: rec {
-      postPatch = ''
-        substituteInPlace config/boot.rb --replace "load_path_cache:      true," "load_path_cache:      false," \
-          --replace "autoload_paths_cache: true," "autoload_paths_cache: false,"
-      '';
-    });
+  mastodon = {
     enable = true;
-    localDomain = "forum.flibrary.info";
+    localDomain = "circle.flibrary.info";
     enableUnixSocket = false;
     smtp = {
       createLocally = false;
@@ -151,15 +145,17 @@
       fromAddress = "FLibrary Mastodon <flibrarynfls@outlook.com>";
       passwordFile = config.age.secrets.mastodon.path;
     };
+    s3 = {
+      secretKeyPath = config.age.secrets.s3-secret-key.path;
+      accessKeyPath = config.age.secrets.s3-access-key.path;
+    };
     extraConfig = {
       SMTP_AUTH_METHOD="login";
       SMTP_OPENSSL_VERIFY_MODE="none";
 
       S3_ALIAS_HOST = "mastodon-assets.flibrary.info";
       S3_ENABLED="true";
-      S3_BUCKET="mastodn";
-      AWS_ACCESS_KEY_ID="$(cat ${config.age.secrets.s3-secret-key.path})";
-      AWS_SECRET_ACCESS_KEY="$(cat ${config.age.secrets.s3-access-key.path})";
+      S3_BUCKET="mastodon";
       S3_PROTOCOL="https";
       S3_HOSTNAME="ewr1.vultrobjects.com";
     };
