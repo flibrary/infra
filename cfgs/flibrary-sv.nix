@@ -52,7 +52,7 @@
           }
       }
       mastodon-assets.${cfg.domain} {
-          reverse_proxy https://mastodon.ewr1.vultrobjects.com
+          reverse_proxy https://flibrarymastodon.ewr1.vultrobjects.com
       }
       circle.${cfg.domain} {
           @local {
@@ -155,7 +155,7 @@
 
       S3_ALIAS_HOST = "mastodon-assets.flibrary.info";
       S3_ENABLED="true";
-      S3_BUCKET="mastodon";
+      S3_BUCKET="flibrarymastodon";
       S3_PROTOCOL="https";
       S3_HOSTNAME="ewr1.vultrobjects.com";
     };
