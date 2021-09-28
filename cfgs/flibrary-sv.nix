@@ -15,6 +15,15 @@
       file = ../secrets/mastodon.age;
       owner = "mastodon";
     };
+    # NOTE: we shall create a common `s3` group to manage all users with s3 read/write access
+    s3-access-key = {
+      file = ../secrets/s3-access-key.age;
+      owner = "mastodon";
+    };
+    s3-secret-key = {
+      file = ../secrets/s3-secret-key.age;
+      owner = "mastodon";
+    };
   };
 
   # Firewall options
@@ -41,6 +50,9 @@
           reverse_proxy /rayon localhost:30800 {
             header_up -Origin
           }
+      }
+      mastodon-assets.${cfg.domain} {
+          reverse_proxy https://mastodon.ewr1.vultrobjects.com
       }
       forum.${cfg.domain} {
           @local {
@@ -142,6 +154,14 @@
     extraConfig = {
       SMTP_AUTH_METHOD="login";
       SMTP_OPENSSL_VERIFY_MODE="none";
+
+      S3_ALIAS_HOST = "mastodon-assets.flibrary.info";
+      S3_ENABLED="true";
+      S3_BUCKET="mastodn";
+      AWS_ACCESS_KEY_ID="$(cat ${config.age.secrets.s3-access-key.path})";
+      AWS_SECRET_ACCESS_KEY="$(cat ${config.age.secrets.s3-secret-key.path})";
+      S3_PROTOCOL="https";
+      S3_HOSTNAME="ewr1.vultrobjects.com";
     };
   };
 
