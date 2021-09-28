@@ -122,6 +122,12 @@
   };
 
   services.mastodon = {
+    package = pkgs.mastodon.overrideAttrs (oldAttrs: rec {
+      postPatch = ''
+        substituteInPlace config/boot.rb --replace "load_path_cache:      true," "load_path_cache:      false," \
+          --replace "autoload_paths_cache: true," "autoload_paths_cache: false,"
+      '';
+    });
     enable = true;
     localDomain = "forum.flibrary.info";
     enableUnixSocket = false;
