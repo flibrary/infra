@@ -157,7 +157,7 @@
       S3_ENABLED="true";
       S3_BUCKET="flibrarymastodon";
       S3_PROTOCOL="https";
-      S3_HOSTNAME="ewr1.vultrobjects.com";
+      S3_ENDPOINT="ewr1.vultrobjects.com";
     };
   };
 
