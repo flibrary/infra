@@ -3,7 +3,9 @@ in {
   "v2ray.age".publicKeys = [ ssh.servers.flibrary-sv ssh.ash ];
   "v2ray-dns-camo.age".publicKeys = [ ssh.servers.flibrary-shanghai ssh.ash ];
   "sails.age".publicKeys = [ ssh.servers.flibrary-sv ssh.ash ];
-  "mastodon.age".publicKeys = [ ssh.servers.flibrary-sv ssh.ash ];
+  "email.age".publicKeys = [ ssh.servers.flibrary-sv ssh.ash ];
   "s3-access-key.age".publicKeys = [ ssh.servers.flibrary-sv ssh.ash ];
   "s3-secret-key.age".publicKeys = [ ssh.servers.flibrary-sv ssh.ash ];
+  "discourse-secret-key.age".publicKeys = [ ssh.servers.flibrary-sv ssh.ash ];
+  "discourse-admin-passwd.age".publicKeys = [ ssh.servers.flibrary-sv ssh.ash ];
 }

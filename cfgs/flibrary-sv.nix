@@ -11,121 +11,37 @@
       file = ../secrets/sails.age;
       owner = "sails";
     };
-    mastodon = {
-      file = ../secrets/mastodon.age;
-      owner = "mastodon";
+
+    discourse-admin-passwd = {
+      file = ../secrets/discourse-admin-passwd.age;
+      owner = "discourse";
+    };
+    discourse-email = {
+      file = ../secrets/email.age;
+      owner = "discourse";
     };
     # NOTE: we shall create a common `s3` group to manage all users with s3 read/write access
-    s3-access-key = {
+    discourse-s3-access-key = {
       file = ../secrets/s3-access-key.age;
-      owner = "mastodon";
+      owner = "discourse";
     };
-    s3-secret-key = {
+    discourse-s3-secret-key = {
       file = ../secrets/s3-secret-key.age;
-      owner = "mastodon";
+      owner = "discourse";
+    };
+    discourse-secret-key = {
+      file = ../secrets/discourse-secret-key.age;
+      owner = "discourse";
     };
   };
 
   # Firewall options
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
-  services.caddy = let
-    cfg = {
-      domain = "flibrary.info";
-      reverseDstPort = 8000;
-      mastodonWebPort = config.services.mastodon.webPort;
-      mastodonStreamingPort = config.services.mastodon.streamingPort;
-    };
-  in {
-    enable = true;
-    config = ''
-      ${cfg.domain} {
-          reverse_proxy 127.0.0.1:${toString cfg.reverseDstPort}
-          reverse_proxy /rayon localhost:30800 {
-            header_up -Origin
-          }
-      }
-      www.${cfg.domain} {
-          reverse_proxy 127.0.0.1:${toString cfg.reverseDstPort}
-          reverse_proxy /rayon localhost:30800 {
-            header_up -Origin
-          }
-      }
-      mastodon-assets.${cfg.domain} {
-          reverse_proxy https://flibrarymastodon.ewr1.vultrobjects.com
-      }
-      circle.${cfg.domain} {
-          @local {
-            file
-            not path /
-          }
-          @local_media {
-            path_regexp /system/(.*)
-          }
-          @streaming {
-            path /api/v1/streaming/*
-          }
-          @cache_control {
-            path_regexp ^/(emoji|packs|/system/accounts/avatars|/system/media_attachments/files)
-          }
-
-          root * ${config.services.mastodon.package}/public/
-
-          encode zstd gzip
-
-          handle_errors {
-            rewrite 500.html
-            file_server
-          }
-
-          header {
-            Strict-Transport-Security "max-age=31536000"
-          }
-          header /sw.js Cache-Control "public, max-age=0"
-          header @cache_control Cache-Control "public, max-age=31536000, immutable"
-
-          handle @local {
-            file_server
-          }
-
-          ## If you've been migrated media from local to object storage, this navigate old URL to new one.
-          # redir @local_media https://yourobjectstorage.example.com/{http.regexp.1} permanent
-
-          reverse_proxy @streaming {
-            to http://localhost:${toString cfg.mastodonStreamingPort}
-
-            transport http {
-              keepalive 5s
-              keepalive_idle_conns 10
-            }
-          }
-
-          reverse_proxy  {
-            to http://localhost:${toString cfg.mastodonWebPort}
-
-            header_up X-Forwarded-Port 443
-            header_up X-Forwarded-Proto https
-
-            transport http {
-              keepalive 5s
-              keepalive_idle_conns 10
-            }
-          }
-      }
-    '';
-  };
-
   services.v2ray = {
     enable = true;
     configFile = config.age.secrets.v2ray.path;
   };
-
-  # v2ray-config = {
-  #   enable = true;
-  #   port = 30800;
-  #   path = "/rayon";
-  #   clients = (import config.age.secrets.v2ray).clients;
-  # };
 
   sails = {
     enable = true;
@@ -133,32 +49,90 @@
     package = pkgs.sails;
   };
 
-  mastodon = {
+  services.nginx = {
     enable = true;
-    localDomain = "circle.flibrary.info";
-    enableUnixSocket = false;
-    smtp = {
-      createLocally = false;
-      host = "smtp-mail.outlook.com";
-      user = "flibrarynfls@outlook.com";
-      port = 587;
-      fromAddress = "FLibrary Mastodon <flibrarynfls@outlook.com>";
-      passwordFile = config.age.secrets.mastodon.path;
-    };
-    s3 = {
-      secretKeyPath = config.age.secrets.s3-secret-key.path;
-      accessKeyPath = config.age.secrets.s3-access-key.path;
-    };
-    extraConfig = {
-      SMTP_AUTH_METHOD="login";
-      SMTP_OPENSSL_VERIFY_MODE="none";
+    additionalModules = [ pkgs.nginxModules.brotli ];
 
-      S3_ALIAS_HOST = "mastodon-assets.flibrary.info";
-      S3_ENABLED="true";
-      S3_BUCKET="flibrarymastodon";
-      S3_PROTOCOL="https";
-      S3_ENDPOINT="https://ewr1.vultrobjects.com";
+    recommendedTlsSettings = true;
+    recommendedOptimisation = true;
+    recommendedGzipSettings = true;
+    recommendedProxySettings = true;
+
+    virtualHosts."flibrary.info" = {
+      enableACME = true;
+      forceSSL = true;
+      # sails
+      locations."/".proxyPass = "http://127.0.0.1:8000";
+      # v2ray
+      locations."/rayon" = {
+        proxyWebsockets = true;
+        proxyPass = "http://127.0.0.1:30800";
+      };
+      serverAliases = [ "www.flibrary.info" ];
     };
+  };
+
+  services.discourse = {
+    enable = true;
+    plugins = with config.services.discourse.package.plugins;
+      [ discourse-data-explorer ];
+    hostname = "circle.flibrary.info";
+    mail = {
+      outgoing = {
+        username = "flibrarynfls@outlook.com";
+        serverAddress = "smtp-mail.outlook.com";
+        passwordFile = config.age.secrets.discourse-email.path;
+        opensslVerifyMode = "none";
+        authentication = "login";
+        port = 587;
+      };
+      contactEmailAddress = "flibrarynfls@outlook.com";
+      notificationEmailAddress = "flibrarynfls@outlook.com";
+    };
+    admin = {
+      username = "admin";
+      email = "flibrarynfls@outlook.com";
+      fullName = "FLibrary Circle Admin";
+      passwordFile = config.age.secrets.discourse-admin-passwd.path;
+    };
+    secretKeyBaseFile = config.age.secrets.discourse-secret-key.path;
+    siteSettings = {
+      required = {
+        title = "FLibrary Circle";
+        short_site_description =
+          "A dynamic and informative platform made for international students";
+      };
+      developer.bypass_wizard_check = false;
+
+      security.force_https = true;
+      files = {
+        enable_s3_uploads = true;
+        s3_access_key_id._secret =
+          config.age.secrets.discourse-s3-access-key.path;
+        s3_secret_access_key._secret =
+          config.age.secrets.discourse-s3-secret-key.path;
+        s3_upload_bucket = "flibrarycircle";
+        s3_endpoint = "https://ewr1.vultrobjects.com";
+
+        # We are using object storage, there is no risk on allowing this.
+        authorized_extensions = "*";
+      };
+      backups.s3_backup_bucket = "flibrarycirclebackup";
+
+      users = { allow_anonymous_posting = true; };
+      # Copied from https://github.com/discourse/discourse/blob/main/config/site_settings.yml to accomodate zh_CN posts
+      posting = {
+        body_min_entropy = 3;
+        min_topic_title_length = 6;
+      };
+      search.min_search_term_length = 1;
+      uncategoriezed.slug_generation_method = "none";
+    };
+  };
+
+  security.acme = {
+    email = "lexugeyky@outlook.com";
+    acceptTerms = true;
   };
 
   # This is required to push "unsigned" nix store paths. We only allow wheel group to do so to limit the attack surface.
