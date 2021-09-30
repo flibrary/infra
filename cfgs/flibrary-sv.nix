@@ -51,7 +51,6 @@
 
   services.nginx = {
     enable = true;
-    additionalModules = [ pkgs.nginxModules.brotli ];
 
     recommendedTlsSettings = true;
     recommendedOptimisation = true;
