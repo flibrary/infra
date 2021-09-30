@@ -73,6 +73,12 @@
 
   services.discourse = {
     enable = true;
+    package = pkgs.discourse.overrideAttrs (oldAttrs: rec {
+      # We don't have a normal default anymore, plz don't revert our email
+      prePatch = ''
+        rm ./db/fixtures/990_settings.rb
+      '';
+    });
     plugins = with config.services.discourse.package.plugins;
       [ discourse-data-explorer ];
     hostname = "circle.flibrary.info";
