@@ -74,8 +74,10 @@
   services.discourse = {
     enable = true;
     package = pkgs.discourse-patched;
-    plugins = with config.services.discourse.package.plugins;
-      [ discourse-solved ];
+    plugins = with config.services.discourse.package.plugins; [
+      discourse-solved
+      discourse-math
+    ];
     hostname = "circle.flibrary.info";
     mail = {
       outgoing = {
