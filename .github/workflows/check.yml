@@ -32,4 +32,4 @@ jobs:
         if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
     - run: |
         nix flake update
-        nix run .#deploy
+        nix run .#deploy -- .#flibrary-sv

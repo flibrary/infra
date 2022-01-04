@@ -70,9 +70,9 @@
               {
                 nixpkgs.overlays = [
                   sails.overlay
-                  (final: prev: {
-                    discourse-patched = prev.callPackage ./pkgs/discourse { };
-                  })
+                  # (final: prev: {
+                  #   discourse-patched = prev.callPackage ./pkgs/discourse { };
+                  # })
                 ];
               }
               ./cfgs/flibrary-sv.nix
