@@ -67,11 +67,7 @@
               self.nixosModules.vultr-hardware
               sails.nixosModule
               agenix.nixosModules.age
-              {
-                nixpkgs.overlays = [
-                  sails.overlay
-                ];
-              }
+              { nixpkgs.overlays = [ sails.overlay ]; }
               ./cfgs/flibrary-sv.nix
             ];
           };
