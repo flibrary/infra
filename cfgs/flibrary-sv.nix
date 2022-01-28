@@ -132,7 +132,7 @@
   };
 
   security.acme = {
-    email = "lexugeyky@outlook.com";
+    defaults.email = "lexugeyky@outlook.com";
     acceptTerms = true;
   };
 
