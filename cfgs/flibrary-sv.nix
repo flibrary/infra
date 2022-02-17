@@ -46,7 +46,7 @@
   sails = {
     enable = true;
     configFile = config.age.secrets.sails.path;
-    package = pkgs.sails;
+    package = pkgs.sails-bin;
   };
 
   services.nginx = {
