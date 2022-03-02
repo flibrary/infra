@@ -106,14 +106,16 @@
       developer.bypass_wizard_check = false;
 
       security.force_https = true;
-      files = {
+      files = let asset_bucket = "flibrarycircle";
+      in {
         enable_s3_uploads = true;
         s3_access_key_id._secret =
           config.age.secrets.discourse-s3-access-key.path;
         s3_secret_access_key._secret =
           config.age.secrets.discourse-s3-secret-key.path;
-        s3_upload_bucket = "flibrarycircle";
+        s3_upload_bucket = asset_bucket;
         s3_endpoint = "https://s3.us-west-004.backblazeb2.com";
+        s3_cdn_url = "https://cdn.flibrary.info/file/${asset_bucket}";
 
         # We are using object storage, there is no risk on allowing this.
         authorized_extensions = "*";
