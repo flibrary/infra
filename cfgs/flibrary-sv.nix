@@ -113,7 +113,7 @@
         s3_secret_access_key._secret =
           config.age.secrets.discourse-s3-secret-key.path;
         s3_upload_bucket = "flibrarycircle";
-        s3_endpoint = "https://ewr1.vultrobjects.com";
+        s3_endpoint = "https://s3.us-west-004.backblazeb2.com";
 
         # We are using object storage, there is no risk on allowing this.
         authorized_extensions = "*";
