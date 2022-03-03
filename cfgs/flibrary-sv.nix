@@ -133,6 +133,25 @@
     };
   };
 
+  mailserver = {
+    enable = true;
+    fqdn = "mail.flibrary.info";
+    domains = [ "flibrary.info" ];
+
+    # A list of all login accounts. To create the password hashes, use
+    # nix run nixpkgs.apacheHttpd -c htpasswd -nbB "" "super secret password" | cut -d: -f2
+    loginAccounts = {
+        "noreply@flibrary.info" = {
+            hashedPassword = "$6$0F6lpc4higi2UgqU$FL.tNGHS1wP0gIlNo31bo4V0ikIEdZirpVWHeugWLgFYy5DKcKbEFKdyNuKkb6XccQBSJUnVp0eEX32YrMDJb1";
+            # aliases = ["postmaster@example.com"];
+        };
+    };
+
+    # Use Let's Encrypt certificates. Note that this needs to set up a stripped
+    # down nginx and opens port 80.
+    certificateScheme = 3;
+  };
+
   security.acme = {
     defaults.email = "lexugeyky@outlook.com";
     acceptTerms = true;
