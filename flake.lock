@@ -239,15 +239,16 @@
         "utils": "utils_3"
       },
       "locked": {
-        "lastModified": 1645895212,
-        "narHash": "sha256-SbR7HtHg7/UopLYLmMwwFZGF0BTmg0tLwIU/rQtRLfk=",
-        "owner": "simple-nixos-mailserver",
+        "lastModified": 1645895536,
+        "narHash": "sha256-0+81Ii66dE/IaOb1fmDFJexGPh56XbWTWlqnNrWD4Is=",
+        "owner": "nh21",
         "repo": "nixos-mailserver",
-        "rev": "7de138037f62679e2fefa0549af543412dab0d1a",
+        "rev": "fcabcaba5f7f41aacb5b6ae366d5fd187c7e59a3",
         "type": "gitlab"
       },
       "original": {
-        "owner": "simple-nixos-mailserver",
+        "owner": "nh21",
+        "ref": "issue-232-fix-acme-postfix-reload-hanging",
         "repo": "nixos-mailserver",
         "type": "gitlab"
       }
