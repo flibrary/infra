@@ -158,7 +158,7 @@
   };
 
   # This is required to push "unsigned" nix store paths. We only allow wheel group to do so to limit the attack surface.
-  nix.trustedUsers = [ "@wheel" ];
+  nix.settings.trusted-users = [ "@wheel" ];
 
   users = {
     # Let users be immutable/declarative

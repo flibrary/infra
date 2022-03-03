@@ -10,7 +10,7 @@
     agenix.url = "github:ryantm/agenix";
   };
 
-  outputs = { self, nixpkgs, deploy-rs, utils, sails, agenix, }:
+  outputs = { self, nixpkgs, deploy-rs, utils, sails, agenix, snm, ... }:
     nixpkgs.lib.recursiveUpdate (utils.lib.eachSystem [ "x86_64-linux" ]
       (system: rec {
         apps = {
@@ -64,6 +64,7 @@
             system = "x86_64-linux";
             modules = [
               self.nixosModules.base
+              snm.nixosModule
               # self.nixosModules.v2ray
               self.nixosModules.vultr-hardware
               sails.nixosModule
