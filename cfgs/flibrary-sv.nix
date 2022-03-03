@@ -80,19 +80,19 @@
     hostname = "circle.flibrary.info";
     mail = {
       outgoing = {
-        username = "flibrarynfls@outlook.com";
-        serverAddress = "smtp-mail.outlook.com";
+        username = "circle@flibrary.info";
+        serverAddress = "mail.flibrary.info";
         passwordFile = config.age.secrets.discourse-email.path;
         opensslVerifyMode = "none";
         authentication = "login";
         port = 587;
       };
-      contactEmailAddress = "flibrarynfls@outlook.com";
-      notificationEmailAddress = "flibrarynfls@outlook.com";
+      contactEmailAddress = "admin@flibrary.info";
+      notificationEmailAddress = "circle@flibrary.info";
     };
     admin = {
       username = "admin";
-      email = "flibrarynfls@outlook.com";
+      email = "admin@flibrary.info";
       fullName = "FLibrary Circle Admin";
       passwordFile = config.age.secrets.discourse-admin-passwd.path;
     };
@@ -139,12 +139,26 @@
     domains = [ "flibrary.info" ];
 
     # A list of all login accounts. To create the password hashes, use
-    # nix run nixpkgs.apacheHttpd -c htpasswd -nbB "" "super secret password" | cut -d: -f2
+    # mkpasswd -m sha-512
     loginAccounts = {
-        "noreply@flibrary.info" = {
-            hashedPassword = "$6$0F6lpc4higi2UgqU$FL.tNGHS1wP0gIlNo31bo4V0ikIEdZirpVWHeugWLgFYy5DKcKbEFKdyNuKkb6XccQBSJUnVp0eEX32YrMDJb1";
-            # aliases = ["postmaster@example.com"];
-        };
+      # Used by sails
+      "sails@flibrary.info" = {
+        hashedPassword =
+          "$6$ZGbdd01cFfnno19T$o2n4aaiyERPY8aML2xzVlmVpX77A5ktLFOAuuNdp878OkHb8fz2hyLl.uT8YD0Ueq.sb6wFl8i8m554DozUHc1";
+        sendOnly = true;
+      };
+      # The email address used by FLibrary Circle
+      "circle@flibrary.info" = {
+        hashedPassword =
+          "$6$sHjgQ2IynYkQXd4d$Cmm9k7sY2TZOkLVsKLkdVDxybq7S3kJoEBZuz.8iinuksochdt6Y9hU7OFSsFPPKT0Mw5gb648YVy/QtFMxh40";
+        sendOnly = true;
+      };
+      # Used by me
+      "harryying@flibrary.info" = {
+        hashedPassword =
+          "$6$MNxXCDu93K.Nvd2X$pO8OYYlU2p2rPChTVJ8bH3uKQWaXM3ZTJ6eLyW5Ey/Tf6WtIXWy4VeTVxaKyJlGLen6zygfe3o78R4E2DN8m./";
+        aliases = [ "admin@flibrary.info" ];
+      };
     };
 
     # Use Let's Encrypt certificates. Note that this needs to set up a stripped

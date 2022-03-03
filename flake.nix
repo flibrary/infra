@@ -3,7 +3,8 @@
 
   inputs = {
     # snm.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
-    snm.url = "gitlab:nh21/nixos-mailserver/issue-232-fix-acme-postfix-reload-hanging";
+    snm.url =
+      "gitlab:nh21/nixos-mailserver/issue-232-fix-acme-postfix-reload-hanging";
     deploy-rs.url = "github:serokell/deploy-rs";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
