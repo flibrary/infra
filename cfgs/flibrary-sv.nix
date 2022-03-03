@@ -92,7 +92,7 @@
     };
     admin = {
       username = "admin";
-      email = "flibrarynfls@outlook.com";
+      email = "admin@outlook.com";
       fullName = "FLibrary Circle Admin";
       passwordFile = config.age.secrets.discourse-admin-passwd.path;
     };
