@@ -1,4 +1,6 @@
 { config, lib, pkgs, ... }: {
+  system.stateVersion = "22.05";
+
   base = {
     enable = true;
     hostname = "flibrary-sv";
