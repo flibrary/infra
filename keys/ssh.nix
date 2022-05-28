@@ -10,8 +10,5 @@
     # FLibrary SV Server pub key used for agenix encryption. If server changes, this should be changed as well.
     flibrary-sv =
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH644x5o56908R+LCQPpTOiBm7Oqp1ELk4rT3Jj1jkTD";
-    # FLibrary Shanghai
-    flibrary-shanghai =
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMs92th7nFUqgaJWrUeC9J1fcTP5if7dr4EKq1MqICYf";
   };
 }

@@ -74,20 +74,6 @@
             ];
           };
 
-          # The NixOS configuration for our machine in Shanghai (currently not setup for any service)
-          flibrary-shanghai = nixpkgs.lib.nixosSystem {
-            # Apparently this is x86_64 only
-            system = "x86_64-linux";
-            modules = [
-              self.nixosModules.base
-              # self.nixosModules.v2ray
-              self.nixosModules.tencent-lighthouse
-              agenix.nixosModules.age
-              { nixpkgs.overlays = [ sails.overlay ]; }
-              ./cfgs/flibrary-shanghai.nix
-            ];
-          };
-
           # A portable image used mostly for installation
           img = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
@@ -118,15 +104,6 @@
                   path = deploy-rs.lib.x86_64-linux.activate.nixos
                     self.nixosConfigurations.flibrary-sv;
                 };
-              };
-            };
-            flibrary-shanghai = {
-              hostname = "121.5.66.6";
-              profiles.base = {
-                # deploy the system profile as root
-                user = "root";
-                path = deploy-rs.lib.x86_64-linux.activate.nixos
-                  self.nixosConfigurations.flibrary-shanghai;
               };
             };
           };
