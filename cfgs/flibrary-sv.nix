@@ -182,10 +182,11 @@
       "harryying@flibrary.info" = {
         hashedPassword =
           "$6$MNxXCDu93K.Nvd2X$pO8OYYlU2p2rPChTVJ8bH3uKQWaXM3ZTJ6eLyW5Ey/Tf6WtIXWy4VeTVxaKyJlGLen6zygfe3o78R4E2DN8m./";
-        aliases = [ "admin@flibrary.info" ];
+        aliases = [ "admin@flibrary.info" "harry@flibrary.info" ];
       };
       "wiki@flibrary.info" = {
         hashedPassword = "$6$fmSk1cH2O9AYe9OW$iBnOJE1MuMQL2d8G9Yo0H74AkhArvy0ykSZS349yWJqxGAd6Eb1sKIVzVGS.oPalr3SccxeJgUqG0y.ImlCE40";
+        sendOnly = true;
       };
       "mick@flibrary.info" = {
         hashedPassword = "$6$kW2NcqUajtH7tOXT$ApvNww15pfmG5SA15CkGzydhjXRuVvuYO2CujiLrTIxFLe..k2fluV2RUgUAOq0DNjtx7WEcr6hy1a0vHWnlz0";
