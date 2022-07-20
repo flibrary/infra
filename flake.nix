@@ -52,6 +52,7 @@
         # Reusable NixOS modules
         nixosModules = {
           base = (import ./modules/base.nix);
+          wiki-js = (import ./modules/wikijs.nix);
           # v2ray = (import ./modules/v2ray.nix);
           vultr-hardware = (import ./hardware-cfgs/vultr-hardware.nix);
           tencent-lighthouse = (import ./hardware-cfgs/tencent-lighthouse.nix);
@@ -65,7 +66,7 @@
             modules = [
               self.nixosModules.base
               snm.nixosModule
-              # self.nixosModules.v2ray
+              self.nixosModules.wiki-js
               self.nixosModules.vultr-hardware
               sails.nixosModule
               agenix.nixosModules.age

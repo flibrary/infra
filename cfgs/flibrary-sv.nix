@@ -51,6 +51,20 @@
     package = pkgs.sails-bin;
   };
 
+  # Private wiki by Wiki.js
+  wiki-js-patched = {
+    enable = true;
+    # Local access only
+    settings = {
+      bindIP = "127.0.0.1";
+      db = {
+        host = "/run/postgresql";
+        db = "wiki";
+        user = "wikijs";
+      };
+    };
+  };
+
   services.nginx = {
     enable = true;
 
@@ -72,6 +86,13 @@
         proxyPass = "http://127.0.0.1:30800";
       };
       serverAliases = [ "www.flibrary.info" ];
+    };
+
+    virtualHosts."wiki.flibrary.info" = {
+      enableACME = true;
+      forceSSL = true;
+      # wiki
+      locations."/".proxyPass = "http://127.0.0.1:3000";
     };
   };
 
