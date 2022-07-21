@@ -202,15 +202,21 @@
           "$6$sHjgQ2IynYkQXd4d$Cmm9k7sY2TZOkLVsKLkdVDxybq7S3kJoEBZuz.8iinuksochdt6Y9hU7OFSsFPPKT0Mw5gb648YVy/QtFMxh40";
         sendOnly = true;
       };
+      # Used by FLibrary Wiki
+      "wiki@flibrary.info" = {
+        hashedPassword = "$6$fmSk1cH2O9AYe9OW$iBnOJE1MuMQL2d8G9Yo0H74AkhArvy0ykSZS349yWJqxGAd6Eb1sKIVzVGS.oPalr3SccxeJgUqG0y.ImlCE40";
+        sendOnly = true;
+      };
+      # Used by FLibrary ID service
+      "id@flibrary.info" = {
+        hashedPassword = "$6$/avr1mGKZaCiktbB$BuwOJfantz9SD2bvhJ/QRUktpJ5D2jITn/4YMc47neVegkp7mUDEufoAer2xfPRDdWsX9cyqTsAsfZSqgSIj70";
+        sendOnly = true;
+      };
       # Used by me
       "harryying@flibrary.info" = {
         hashedPassword =
           "$6$MNxXCDu93K.Nvd2X$pO8OYYlU2p2rPChTVJ8bH3uKQWaXM3ZTJ6eLyW5Ey/Tf6WtIXWy4VeTVxaKyJlGLen6zygfe3o78R4E2DN8m./";
         aliases = [ "admin@flibrary.info" "harry@flibrary.info" ];
-      };
-      "wiki@flibrary.info" = {
-        hashedPassword = "$6$fmSk1cH2O9AYe9OW$iBnOJE1MuMQL2d8G9Yo0H74AkhArvy0ykSZS349yWJqxGAd6Eb1sKIVzVGS.oPalr3SccxeJgUqG0y.ImlCE40";
-        sendOnly = true;
       };
       "mick@flibrary.info" = {
         hashedPassword = "$6$kW2NcqUajtH7tOXT$ApvNww15pfmG5SA15CkGzydhjXRuVvuYO2CujiLrTIxFLe..k2fluV2RUgUAOq0DNjtx7WEcr6hy1a0vHWnlz0";
