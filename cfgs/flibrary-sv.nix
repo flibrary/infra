@@ -14,6 +14,10 @@
       owner = "sails";
     };
 
+    # keycloak database password
+    keycloak-db-pass.file = ../secrets/keycloak.age;
+
+
     discourse-admin-passwd = {
       file = ../secrets/discourse-admin-passwd.age;
       owner = "discourse";
@@ -51,6 +55,19 @@
     package = pkgs.sails-bin;
   };
 
+  # SSO with keycloak
+  services.keycloak = {
+    enable = true;
+    settings = {
+      proxy = "edge";
+      http-port = 8090;
+      hostname = "id.flibrary.info";
+      hostname-strict-backchannel = true;
+    };
+    initialAdminPassword = "changeme";  # change on first login
+    database.passwordFile = config.age.secrets.keycloak-db-pass.path;
+  };
+
   # Private wiki by Wiki.js
   wiki-js-patched = {
     enable = true;
@@ -86,6 +103,13 @@
         proxyPass = "http://127.0.0.1:30800";
       };
       serverAliases = [ "www.flibrary.info" ];
+    };
+
+    virtualHosts."id.flibrary.info" = {
+      enableACME = true;
+      forceSSL = true;
+      # wiki
+      locations."/".proxyPass = "http://127.0.0.1:8090";
     };
 
     virtualHosts."wiki.flibrary.info" = {
