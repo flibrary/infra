@@ -125,6 +125,7 @@
     plugins = with config.services.discourse.package.plugins; [
       discourse-solved
       discourse-math
+      discourse-openid-connect
     ];
     hostname = "circle.flibrary.info";
     mail = {
