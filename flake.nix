@@ -44,6 +44,8 @@
           mkShell {
             nativeBuildInputs = [ openssl agenix.defaultPackage.${system} ];
           };
+
+        packages.keywind-theme = with import nixpkgs { system = "${system}"; }; callPackage ./pkgs/keywind-theme.nix {};
       })) {
         # The ISO image
         packages.x86_64-linux.img =
@@ -74,7 +76,7 @@
                 nixpkgs.overlays = [
                   sails.overlay
                   (final: prev: {
-                    keywind-theme = prev.callPackage ./pkgs/keywind-theme { };
+                    keywind-theme = prev.callPackage ./pkgs/keywind-theme.nix { };
                   })
                 ];
               }
