@@ -70,11 +70,11 @@
               snm.nixosModule
               self.nixosModules.wiki-js
               self.nixosModules.vultr-hardware
-              sails.nixosModule
+              sails.nixosModules.default
               agenix.nixosModules.age
               {
                 nixpkgs.overlays = [
-                  sails.overlay
+                  sails.overlays.default
                   (final: prev: {
                     keywind-theme = prev.callPackage ./pkgs/keywind-theme.nix { };
                   })

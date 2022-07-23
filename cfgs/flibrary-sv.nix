@@ -53,6 +53,8 @@
     enable = true;
     configFile = config.age.secrets.sails.path;
     package = pkgs.sails-bin;
+    after = ["keycloak.service"];
+    wants = ["keycloak.service"];
   };
 
   # SSO with keycloak
