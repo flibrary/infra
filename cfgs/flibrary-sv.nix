@@ -64,6 +64,7 @@
       hostname = "id.flibrary.info";
       hostname-strict-backchannel = true;
     };
+    themes = [pkgs.keywind-theme];
     initialAdminPassword = "changeme";  # change on first login
     database.passwordFile = config.age.secrets.keycloak-db-pass.path;
   };

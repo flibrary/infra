@@ -70,7 +70,14 @@
               self.nixosModules.vultr-hardware
               sails.nixosModule
               agenix.nixosModules.age
-              { nixpkgs.overlays = [ sails.overlay ]; }
+              {
+                nixpkgs.overlays = [
+                  sails.overlay
+                  (final: prev: {
+                    keywind-theme = prev.callPackage ./pkgs/keywind-theme { };
+                  })
+                ];
+              }
               ./cfgs/flibrary-sv.nix
             ];
           };
