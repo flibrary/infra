@@ -220,7 +220,7 @@
       "harryying@flibrary.info" = {
         hashedPassword =
           "$6$MNxXCDu93K.Nvd2X$pO8OYYlU2p2rPChTVJ8bH3uKQWaXM3ZTJ6eLyW5Ey/Tf6WtIXWy4VeTVxaKyJlGLen6zygfe3o78R4E2DN8m./";
-        aliases = [ "admin@flibrary.info" "harry@flibrary.info" ];
+        aliases = [ "admin@flibrary.info" "harry@flibrary.info" "bd@flibrary.info" ];
       };
       "mick@flibrary.info" = {
         hashedPassword = "$6$kW2NcqUajtH7tOXT$ApvNww15pfmG5SA15CkGzydhjXRuVvuYO2CujiLrTIxFLe..k2fluV2RUgUAOq0DNjtx7WEcr6hy1a0vHWnlz0";
