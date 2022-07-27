@@ -88,7 +88,7 @@
   services.nginx = {
     enable = true;
 
-    clientMaxBodySize = "100m";
+    clientMaxBodySize = "100M";
 
     recommendedTlsSettings = true;
     recommendedOptimisation = true;
