@@ -123,6 +123,10 @@
     };
   };
 
+  systemd.services.discourse.environment = {
+    # Too much unicorn workers consuming memory
+    UNICORN_WORKERS = "2";
+  };
   services.discourse = {
     enable = true;
     plugins = with config.services.discourse.package.plugins; [
