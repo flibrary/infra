@@ -12,6 +12,8 @@
     hostname = "flibrary-sv";
   };
 
+  time.timeZone = "America/Los_Angeles";
+
   # Firewall options
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
