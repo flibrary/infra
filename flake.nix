@@ -4,7 +4,7 @@
   inputs = {
     snm.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     deploy-rs.url = "github:serokell/deploy-rs";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-wiki-js.url = "github:nixos/nixpkgs/4b78546205df378363d1a3d0128ddb4b407a66de";
     utils.url = "github:numtide/flake-utils";
     sails.url = "github:flibrary/sails";
