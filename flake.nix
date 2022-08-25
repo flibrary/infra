@@ -4,14 +4,14 @@
   inputs = {
     snm.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     deploy-rs.url = "github:serokell/deploy-rs";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
-    nixpkgs-wiki-js.url = "github:nixos/nixpkgs/4b78546205df378363d1a3d0128ddb4b407a66de";
+    nixpkgs-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
     sails.url = "github:flibrary/sails";
     agenix.url = "github:ryantm/agenix";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-wiki-js, deploy-rs, utils, sails, agenix, snm, ... }:
+  outputs = { self, nixpkgs, nixpkgs-small, deploy-rs, utils, sails, agenix, snm, ... }:
     nixpkgs.lib.recursiveUpdate (utils.lib.eachSystem [ "x86_64-linux" ]
       (system: rec {
         apps = {
@@ -80,8 +80,8 @@
                   (final: prev: {
                     keywind-theme =
                       prev.callPackage ./pkgs/keywind-theme.nix { };
-                    # Wiki-js is known broken on the latest. We have to pin it to the latest known-good version.
-                    # wiki-js = nixpkgs-wiki-js.legacyPackages."${system}".pkgs.wiki-js;
+                    # keycloak is known broken on unstable. We have to pin it to the master version
+                    keycloak = nixpkgs-small.legacyPackages."${system}".pkgs.keycloak;
                   })
                 ];
               }

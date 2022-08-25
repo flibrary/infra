@@ -147,19 +147,19 @@
         "type": "indirect"
       }
     },
-    "nixpkgs-wiki-js": {
+    "nixpkgs-small": {
       "locked": {
-        "lastModified": 1660932069,
-        "narHash": "sha256-Qn7MBvqNhs2eqkzN1TK0TulSUOk4yRi0spdu0utxsPI=",
+        "lastModified": 1661361016,
+        "narHash": "sha256-Bjf6ZDnDc6glTwIIItvwfcaeJ5zWFM6GYfPajSArdUY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "4b78546205df378363d1a3d0128ddb4b407a66de",
+        "rev": "b784c5ae63dd288375af1b4d37b8a27dd8061887",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
+        "ref": "nixos-unstable-small",
         "repo": "nixpkgs",
-        "rev": "4b78546205df378363d1a3d0128ddb4b407a66de",
         "type": "github"
       }
     },
@@ -231,7 +231,7 @@
         "agenix": "agenix",
         "deploy-rs": "deploy-rs",
         "nixpkgs": "nixpkgs_3",
-        "nixpkgs-wiki-js": "nixpkgs-wiki-js",
+        "nixpkgs-small": "nixpkgs-small",
         "sails": "sails",
         "snm": "snm",
         "utils": "utils_4"
