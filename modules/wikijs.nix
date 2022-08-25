@@ -131,7 +131,7 @@ in {
         WorkingDirectory = "/var/lib/${cfg.stateDirectoryName}";
         User = "wikijs";
         Group = "wikijs";
-        ExecStart = "${pkgs.nodejs}/bin/node ${pkgs.wiki-js}/server";
+        ExecStart = "${pkgs.nodejs-16_x}/bin/node ${pkgs.wiki-js}/server";
 
         # RemoveIPC = true;
         PrivateTmp = true;

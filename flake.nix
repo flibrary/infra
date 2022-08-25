@@ -81,7 +81,7 @@
                     keywind-theme =
                       prev.callPackage ./pkgs/keywind-theme.nix { };
                     # Wiki-js is known broken on the latest. We have to pin it to the latest known-good version.
-                    wiki-js = nixpkgs-wiki-js.legacyPackages."${system}".pkgs.wiki-js;
+                    # wiki-js = nixpkgs-wiki-js.legacyPackages."${system}".pkgs.wiki-js;
                   })
                 ];
               }
