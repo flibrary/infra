@@ -5,12 +5,13 @@
     snm.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     deploy-rs.url = "github:serokell/deploy-rs";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-wiki-js.url = "github:nixos/nixpkgs/4b78546205df378363d1a3d0128ddb4b407a66de";
     utils.url = "github:numtide/flake-utils";
     sails.url = "github:flibrary/sails";
     agenix.url = "github:ryantm/agenix";
   };
 
-  outputs = { self, nixpkgs, deploy-rs, utils, sails, agenix, snm, ... }:
+  outputs = { self, nixpkgs, nixpkgs-wiki-js, deploy-rs, utils, sails, agenix, snm, ... }:
     nixpkgs.lib.recursiveUpdate (utils.lib.eachSystem [ "x86_64-linux" ]
       (system: rec {
         apps = {
@@ -63,7 +64,7 @@
 
         nixosConfigurations = {
           # The NixOS configuration for our machine in Silicon Valley
-          flibrary-sv = nixpkgs.lib.nixosSystem {
+          flibrary-sv = nixpkgs.lib.nixosSystem rec {
             # Apparently this is x86_64 only
             system = "x86_64-linux";
             modules = [
@@ -79,6 +80,8 @@
                   (final: prev: {
                     keywind-theme =
                       prev.callPackage ./pkgs/keywind-theme.nix { };
+                    # Wiki-js is known broken on the latest. We have to pin it to the latest known-good version.
+                    wiki-js = nixpkgs-wiki-js.legacyPackages."${system}".pkgs.wiki-js;
                   })
                 ];
               }

@@ -147,6 +147,22 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-wiki-js": {
+      "locked": {
+        "lastModified": 1660932069,
+        "narHash": "sha256-Qn7MBvqNhs2eqkzN1TK0TulSUOk4yRi0spdu0utxsPI=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "4b78546205df378363d1a3d0128ddb4b407a66de",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "4b78546205df378363d1a3d0128ddb4b407a66de",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1648219316,
@@ -215,6 +231,7 @@
         "agenix": "agenix",
         "deploy-rs": "deploy-rs",
         "nixpkgs": "nixpkgs_3",
+        "nixpkgs-wiki-js": "nixpkgs-wiki-js",
         "sails": "sails",
         "snm": "snm",
         "utils": "utils_4"
