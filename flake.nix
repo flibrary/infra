@@ -4,14 +4,14 @@
   inputs = {
     snm.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     deploy-rs.url = "github:serokell/deploy-rs";
-    nixpkgs-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    # nixpkgs-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
     sails.url = "github:flibrary/sails";
     agenix.url = "github:ryantm/agenix";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-small, deploy-rs, utils, sails, agenix, snm, ... }:
+  outputs = { self, nixpkgs, deploy-rs, utils, sails, agenix, snm, ... }:
     nixpkgs.lib.recursiveUpdate (utils.lib.eachSystem [ "x86_64-linux" ]
       (system: rec {
         apps = {
@@ -81,7 +81,7 @@
                     keywind-theme =
                       prev.callPackage ./pkgs/keywind-theme.nix { };
                     # keycloak is known broken on unstable. We have to pin it to the master version
-                    keycloak = nixpkgs-small.legacyPackages."${system}".pkgs.keycloak;
+                    # keycloak = nixpkgs-small.legacyPackages."${system}".pkgs.keycloak;
                   })
                 ];
               }
