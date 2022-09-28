@@ -1,7 +1,10 @@
 { config, lib, pkgs, ... }: {
   # Secrets used by this machine
   age.secrets = {
-    v2ray.file = ../../secrets/v2ray.age;
+    v2ray = {
+      file = ../../secrets/v2ray.age;
+      mode = "444";
+    };
     sails = {
       file = ../../secrets/sails.age;
       owner = "sails";
